@@ -26,7 +26,7 @@ jobs:
           java-version: 11.0.1
 
       - name: Build with Gradle
-        run: gradle build
+        run: gradle build -x test
 
       - name: Testes
         run: gradle test

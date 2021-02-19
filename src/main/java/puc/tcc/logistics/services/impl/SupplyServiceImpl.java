@@ -39,7 +39,9 @@ public class SupplyServiceImpl implements SupplyService {
 
     @Override
     public List<SupplyResponse> findAll() {
+        List items = new List();
         var supplies = supplyRepository.findAll();
-        return supplies.map(supplyMapper::toResponse);
+        supplies.forEach((item) -> items.add(supplyMapper.toResponse(item)));
+        return items;
     }
 }

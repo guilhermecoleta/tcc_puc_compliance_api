@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Data
 public class SupplyEntity implements Serializable {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     private String description;
 }

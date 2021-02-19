@@ -24,4 +24,10 @@ public class SupplyResource {
         var response = supplyService.findById(id);
         return response.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @GetMapping(value = "/supplies")
+    public ResponseEntity<SupplyResponse> findAll(){
+        var response = supplyService.findAll();
+        return response.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
 }

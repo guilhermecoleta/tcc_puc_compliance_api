@@ -4,12 +4,12 @@ services:
   app:
     image: 'logistics:latest'
     build:
-      context: .
+      context: ""
     container_name: app
     depends_on:
       - postgres
     environment:
-      - SPRING_PROFILES_ACTIVE=local
+      - PROFILE=local
 
   postgres:
     container_name: postgres_container

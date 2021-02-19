@@ -37,6 +37,4 @@ jobs:
           dockerfile_name: Dockerfile
           docker_options: "--no-cache"
           dockerfile_directory: ./
-          SPRING_PROFILES_ACTIVE: production
-        env:
-          SPRING_PROFILES_ACTIVE: production
+          build-args: PROFILE=production

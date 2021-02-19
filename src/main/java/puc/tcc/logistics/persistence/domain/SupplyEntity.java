@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Data
 public class SupplyEntity implements Serializable {
     private static final String SEQ_SUPPLY_GEN = "SEQ_SUPPLY_GEN";
-    private static final String SQ_SUPPLY = "SQ_SUPPLY";
+    private static final String SQ_SUPPLY = "SEQ_SUPPLY";
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_SUPPLY_GEN)

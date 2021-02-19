@@ -12,6 +12,7 @@ import puc.tcc.logistics.services.SupplyService;
 import javax.transaction.Transactional;
 import java.util.Optional;
 import java.util.List;
+import java.util.ArrayList;
 
 @Service
 @RequiredArgsConstructor
@@ -39,7 +40,7 @@ public class SupplyServiceImpl implements SupplyService {
 
     @Override
     public List<SupplyResponse> findAll() {
-        List items = new List();
+        List<SupplyResponse> items = new ArrayList<SupplyResponse>();
         var supplies = supplyRepository.findAll();
         supplies.forEach((item) -> items.add(supplyMapper.toResponse(item)));
         return items;

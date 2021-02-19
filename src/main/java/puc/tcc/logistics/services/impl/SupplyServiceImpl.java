@@ -11,6 +11,7 @@ import puc.tcc.logistics.services.SupplyService;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -34,5 +35,11 @@ public class SupplyServiceImpl implements SupplyService {
     public Optional<SupplyResponse> findById(final Long id){
         var supply = supplyRepository.findById(id);
         return supply.map(supplyMapper::toResponse);
+    }
+
+    @Override
+    public List<SupplyResponse> findAll() {
+        var supplies = supplyRepository.findAll();
+        return supplies.map(supplyMapper::toResponse);
     }
 }

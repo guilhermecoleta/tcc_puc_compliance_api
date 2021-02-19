@@ -11,8 +11,12 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @Data
 public class SupplyEntity implements Serializable {
+    private static final String SEQ_SUPPLY_GEN = "SEQ_SUPPLY_GEN";
+    private static final String SQ_SUPPLY = "SQ_SUPPLY";
+
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_SUPPLY_GEN)
+    @SequenceGenerator(name = SEQ_SUPPLY_GEN, sequenceName = SQ_SUPPLY, allocationSize = 1)
     private Long id;
     private String description;
 }

@@ -36,5 +36,4 @@ jobs:
           heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
           dockerfile_name: Dockerfile
           docker_options: "--no-cache"
-          dockerfile_directory: ./
-          build-args: PROFILE=production
+          dockerfile_directory: ./docker/

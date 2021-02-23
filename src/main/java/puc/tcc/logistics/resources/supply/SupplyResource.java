@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import puc.tcc.logistics.services.SupplyService;
 
+import java.util.List;
+
 @RestController()
 public class SupplyResource {
 
@@ -22,6 +24,12 @@ public class SupplyResource {
     @GetMapping(value = "/supplies/{id}")
     public ResponseEntity<SupplyResponse> findById(@PathVariable("id") Long id){
         var response = supplyService.findById(id);
+        return response.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping(value = "/supplies")
+    public ResponseEntity<List<SupplyResponse>> findAll(){
+        var response = supplyService.findAll();
         return response.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

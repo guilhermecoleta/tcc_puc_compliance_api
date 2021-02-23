@@ -8,15 +8,14 @@ spring:
     hikari:
       connection_timeout: 10000
       maximum_pool_size: 5
-    url: jdbc:postgresql://ec2-3-211-245-154.compute-1.amazonaws.com:5432/d4hbek2q5g902q?sslmode=require&user=erbrapclajlnhu&password=c5b8d8203c3b7c8ee7dcc5f5de3035c967d094a1f9ca033f5dac733977bfb98a
+    url: jdbc:postgres://erbrapclajlnhu:c5b8d8203c3b7c8ee7dcc5f5de3035c967d094a1f9ca033f5dac733977bfb98a@ec2-3-211-245-154.compute-1.amazonaws.com:5432/d4hbek2q5g902q
     driver-class-name: org.postgresql.Driver
   jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
     show-sql: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      default_schema: logistics_adm
+      ddl-auto: none
+      default_schema: logistics
       jdbc:
         non_contextual_creation: true
 

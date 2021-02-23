@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.4.2'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id "org.flywaydb.flyway" version "7.5.4"
 }
 
 group = 'puc.tcc'
@@ -29,9 +30,24 @@ dependencies {
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation group: 'org.postgresql', name: 'postgresql', version: '42.1.4'
-
+	compile('io.springfox:springfox-swagger2:2.9.2')
+	compile('io.springfox:springfox-swagger-ui:2.9.2')
 }
 
 test {
 	useJUnitPlatform()
+}
+
+task migrateLocal(type: org.flywaydb.gradle.task.FlywayMigrateTask) {
+	url = 'jdbc:postgresql://localhost:5432/logistics'
+	user = 'admin'
+	password = 'admin'
+	schemas = ['logistics']
+	locations = ['classpath:db/migration']
+}
+
+task migrateProd(type: org.flywaydb.gradle.task.FlywayMigrateTask) {
+	url = 'jdbc:postgresql://ec2-3-211-245-154.compute-1.amazonaws.com:5432/d4hbek2q5g902q?sslmode=require&user=erbrapclajlnhu&password=c5b8d8203c3b7c8ee7dcc5f5de3035c967d094a1f9ca033f5dac733977bfb98a'
+	schemas = ['logistics_adm']
+	locations = ['classpath:db/migration']
 }

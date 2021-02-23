@@ -28,6 +28,9 @@ jobs:
       - name: Build with Gradle
         run: gradle build -x test
 
+      - name: Migration
+        run: gradle migrateProd -i
+
       - name: Build, Push and Release a Docker  to Heroku.
         uses: gonuit/heroku-docker-deploy@v1.1.0
         with:

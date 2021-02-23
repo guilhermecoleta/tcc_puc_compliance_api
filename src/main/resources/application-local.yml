@@ -16,7 +16,8 @@
       show-sql: false
       database-platform: org.hibernate.dialect.PostgreSQLDialect
       hibernate:
-        ddl-auto: validate
-        default_schema: logistics_adm
+        ddl-auto: none
+        default_schema: logistics
         jdbc:
           non_contextual_creation: true
+

@@ -30,6 +30,7 @@ public class SupplyResource {
     @GetMapping(value = "/supplies")
     public ResponseEntity<List<SupplyResponse>> findAll(){
         var response = supplyService.findAll();
-        return response.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        if(response.isEmpty()) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(response);
     }
 }

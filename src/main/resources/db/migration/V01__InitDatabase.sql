@@ -3,6 +3,7 @@ create table logistics.supply (
     description varchar(500)
 );
 
+
 CREATE SEQUENCE logistics.SEQ_SUPPLY
     INCREMENT 1
         MINVALUE 1

@@ -32,13 +32,13 @@ jobs:
         run: gradle migrateProd -i
 
       - name: Build, Push and Release a Docker  to Heroku.
-        uses: gonuit/heroku-docker-deploy@v1.1.0
+        uses: gonuit/heroku-docker-deploy@v1.2.0
         with:
           email: ${{ secrets.HEROKU_EMAIL }}
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
           # Dokerfile name. Optional, by default will be set to "Dockerfile".
-          dockerfile_name: DockerfileLOCAL
+          dockerfile_name: Dockerfile.production
 
           # Additional options of docker build command. (Optional)
           docker_options: "--no-cache"

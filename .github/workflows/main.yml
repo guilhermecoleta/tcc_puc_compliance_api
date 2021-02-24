@@ -39,4 +39,4 @@ jobs:
           heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
           dockerfile_name: Dockerfile.production
           docker_options: "--no-cache"
-          dockerfile_directory: ./
+          dockerfile_directory: ./iasuduiasgduasgduis

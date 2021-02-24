@@ -1,5 +1,5 @@
   server:
-    port: ${PORT:8081}
+    port: 8081
   spring:
     devtools:
       livereload:
@@ -8,7 +8,7 @@
       hikari:
         connection_timeout: 10000
         maximum_pool_size: 5
-      url: jdbc:postgresql://localhost:5432/logistics
+      url: jdbc:postgresql://dbpostgresql:5432/logistics
       username: admin
       password: admin
       driver-class-name: org.postgresql.Driver

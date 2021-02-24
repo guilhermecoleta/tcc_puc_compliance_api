@@ -37,6 +37,12 @@ jobs:
           email: ${{ secrets.HEROKU_EMAIL }}
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
-          dockerfile_name: Dockerfile
+          # Dokerfile name. Optional, by default will be set to "Dockerfile".
+          dockerfile_name: DockerfileLOCAL
+
+          # Additional options of docker build command. (Optional)
           docker_options: "--no-cache"
+
+          # Dokerfile directory.
+          # For example, if you have a Dockerfile in the root of your project, leave it as follows:
           dockerfile_directory: ./docker/

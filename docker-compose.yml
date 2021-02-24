@@ -2,14 +2,14 @@ version: '2'
 
 services:
   app:
-    image: 'logistics:latest'
-    build:
-      context: ""
+    build: .
     container_name: app
     depends_on:
       - postgres
-    environment:
-      - PROFILE=local
+    ports:
+      - "8081:8081"
+    networks:
+      - postgres
 
   postgres:
     container_name: postgres_container

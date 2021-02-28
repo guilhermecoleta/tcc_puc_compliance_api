@@ -41,9 +41,9 @@ public class SupplyResource {
     }
 
     @DeleteMapping(value = "/supplies/{id}")
-    public ResponseEntity<SupplyResponse> delete(@PathVariable("id") Long id){
-        var response = supplyService.findById(id);
-        return response.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<Void> delete(@PathVariable("id") Long id){
+        supplyService.delete(id);
+        return ResponseEntity.ok().build();
     }
 
 //    @PostMapping("/uploadFile")

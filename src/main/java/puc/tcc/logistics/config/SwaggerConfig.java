@@ -1,4 +1,4 @@
-package puc.tcc.logistics;
+package puc.tcc.logistics.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -19,5 +19,8 @@ public class SupplyEntity implements Serializable {
     @SequenceGenerator(name = SEQ_SUPPLY_GEN, sequenceName = SQ_SUPPLY, allocationSize = 1)
     private Long id;
     private String description;
+    private String name;
+    @Column(name = "file_path")
+    private String filePath;
 }
 

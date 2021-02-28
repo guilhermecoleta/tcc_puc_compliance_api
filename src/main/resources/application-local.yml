@@ -8,7 +8,7 @@
       hikari:
         connection_timeout: 10000
         maximum_pool_size: 5
-      url: jdbc:postgresql://dbpostgresql:5432/logistics
+      url: jdbc:postgresql://localhost:5432/logistics
       username: admin
       password: admin
       driver-class-name: org.postgresql.Driver
@@ -17,7 +17,6 @@
       database-platform: org.hibernate.dialect.PostgreSQLDialect
       hibernate:
         ddl-auto: none
-        default_schema: logistics
         jdbc:
           non_contextual_creation: true
 

@@ -11,7 +11,11 @@ import puc.tcc.logistics.resources.supply.SupplyResponse;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface SupplyMapper {
 
-    @Mapping(source = "request.description", target = "description")
+    @Mappings({
+            @Mapping(source = "request.id", target = "id"),
+            @Mapping(source = "request.description", target = "description"),
+            @Mapping(source = "request.name", target = "name")
+    })
     SupplyEntity toModel(SupplyRequest request);
 
     @Mappings({

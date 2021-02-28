@@ -13,4 +13,5 @@ public class SupplyResponse implements Serializable {
 
     private Long id;
     private String description;
+    private String name;
 }

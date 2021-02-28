@@ -26,7 +26,7 @@ public class SupplyServiceImpl implements SupplyService {
 
     @Override
     @Transactional
-    public SupplyResponse create(final SupplyRequest supplyRequest) {
+    public SupplyResponse saveOrUpdate(final SupplyRequest supplyRequest) {
         var model = supplyMapper.toModel(supplyRequest);
         model = supplyRepository.save(model);
         return supplyMapper.toResponse(model);
@@ -44,5 +44,11 @@ public class SupplyServiceImpl implements SupplyService {
         var supplies = supplyRepository.findAll();
         supplies.forEach((item) -> items.add(supplyMapper.toResponse(item)));
         return items;
+    }
+
+    @Override
+    @Transactional
+    public void delete(final Long id){
+        supplyRepository.deleteById(id);
     }
 }

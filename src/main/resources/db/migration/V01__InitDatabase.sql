@@ -1,10 +1,12 @@
-create table logistics.supply (
+create table supply (
     id bigint constraint PK_SUPPLY PRIMARY KEY,
-    description varchar(500)
+    description varchar(500),
+    name varchar(500),
+    file_path varchar(500)
 );
 
 
-CREATE SEQUENCE logistics.SEQ_SUPPLY
+CREATE SEQUENCE SEQ_SUPPLY
     INCREMENT 1
         MINVALUE 1
         MAXVALUE 9223372036854775807

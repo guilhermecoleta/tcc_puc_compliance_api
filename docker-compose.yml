@@ -20,6 +20,7 @@ services:
       POSTGRES_USER: ${POSTGRES_USER:-admin}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-admin}
       PGDATA: /data/postgres
+      POSTGRES_DB: logistics
     volumes:
       - postgres:/data/postgres
     ports:

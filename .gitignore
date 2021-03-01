@@ -149,4 +149,10 @@ gradle-app.setting
 ### Gradle Patch ###
 **/build/
 
+**/files/**
+files/**
+/files/**
+**/files/
+files/
+/files/
 # End of https://www.toptal.com/developers/gitignore/api/java,gradle,intellij

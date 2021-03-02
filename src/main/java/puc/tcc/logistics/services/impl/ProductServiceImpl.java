@@ -1,15 +1,18 @@
 package puc.tcc.logistics.services.impl;
 
-import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import puc.tcc.logistics.exception.LogisticsException;
 import puc.tcc.logistics.mapper.ProductMapper;
 import puc.tcc.logistics.persistence.domain.ProductEntity;
+import puc.tcc.logistics.persistence.domain.SupplierEntity;
 import puc.tcc.logistics.persistence.repositories.ProductRepository;
+import puc.tcc.logistics.persistence.repositories.SupplierRepository;
 import puc.tcc.logistics.resources.product.ProductRequest;
 import puc.tcc.logistics.resources.product.ProductResponse;
 import puc.tcc.logistics.services.ProductService;
@@ -20,8 +23,6 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -38,10 +39,17 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private SupplierRepository supplierRepository;
+
     @Override
     @Transactional
-    public ProductResponse saveOrUpdate(final ProductRequest productRequest) {
+    public ProductResponse saveOrUpdate(final ProductRequest productRequest) throws LogisticsException {
         var model = productMapper.toModel(productRequest);
+        Optional<SupplierEntity> supplier = supplierRepository.findById(productRequest.getId());
+        if(supplier.isEmpty()){
+            throw new LogisticsException(HttpStatus.BAD_REQUEST, "supplier", "Fornecedor não existe");
+        }
         model = productRepository.save(model);
         return productMapper.toResponse(model);
     }
@@ -62,15 +70,19 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public void delete(final Long id){
+    public void delete(final Long id) throws LogisticsException {
+        var product = productRepository.findById(id);
+        if (product.isEmpty()){
+            throw new LogisticsException(HttpStatus.NOT_FOUND, "product", "Produto não existe");
+        }
         productRepository.deleteById(id);
     }
 
     @Override
     @Transactional
-    public void upload(Long id, byte[] file, String filename) throws IOException, NotFoundException {
+    public void upload(Long id, byte[] file, String filename) throws IOException, LogisticsException {
         Optional<ProductEntity> productEntity = productRepository.findById(id);
-        if (productEntity.isEmpty()) throw new NotFoundException("Produto não encontrado!");
+        if (productEntity.isEmpty()) throw new LogisticsException(HttpStatus.NOT_FOUND, "product", "Produto não encontrado!");
         ProductEntity entity = productEntity.get();
         String filePath = getFilePath(filename, entity.getName());
         entity.setFilePath(filePath);
@@ -85,9 +97,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Resource download(Long id) throws NotFoundException, MalformedURLException {
+    public Resource download(Long id) throws MalformedURLException, LogisticsException {
         Optional<ProductEntity> productEntity = productRepository.findById(id);
-        if (productEntity.isEmpty()) throw new NotFoundException("Arquivo não encontrado!");
+        if (productEntity.isEmpty()) throw new LogisticsException(HttpStatus.NOT_FOUND, "file", "Arquivo não encontrado!");
 
         Path path = Paths.get(PATH + productEntity.get().getFilePath());
         return new UrlResource(path.toUri());

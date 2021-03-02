@@ -1,3 +1,5 @@
+import org.flywaydb.gradle.task.FlywayMigrateTask
+
 plugins {
 	id 'org.springframework.boot' version '2.4.2'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
@@ -22,6 +24,7 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	runtimeOnly 'com.h2database:h2'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -39,7 +42,7 @@ test {
 	useJUnitPlatform()
 }
 
-task migrateLocal(type: org.flywaydb.gradle.task.FlywayMigrateTask) {
+task migrateLocal(type: FlywayMigrateTask) {
 	url = 'jdbc:postgresql://localhost:5432/logistics'
 	user = 'admin'
 	password = 'admin'
@@ -47,7 +50,7 @@ task migrateLocal(type: org.flywaydb.gradle.task.FlywayMigrateTask) {
 	locations = ['classpath:db/migration']
 }
 
-task migrateProd(type: org.flywaydb.gradle.task.FlywayMigrateTask) {
+task migrateProd(type: FlywayMigrateTask) {
 	url = 'jdbc:postgresql://ec2-3-211-245-154.compute-1.amazonaws.com:5432/d4hbek2q5g902q?sslmode=require&user=erbrapclajlnhu&password=c5b8d8203c3b7c8ee7dcc5f5de3035c967d094a1f9ca033f5dac733977bfb98a'
 	schemas = ['public']
 	locations = ['classpath:db/migration']

@@ -15,6 +15,7 @@ import puc.tcc.logistics.services.ProductService;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
@@ -62,7 +63,7 @@ public class ProductResource {
     }
 
     @GetMapping("/product/{id}/download")
-    public ResponseEntity<Resource> download(@PathVariable Long id) throws NotFoundException, MalformedURLException, LogisticsException {
+    public ResponseEntity<Resource> download(@PathVariable Long id) throws NotFoundException, MalformedURLException, LogisticsException, URISyntaxException {
         Resource resource = productService.download(id);
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)

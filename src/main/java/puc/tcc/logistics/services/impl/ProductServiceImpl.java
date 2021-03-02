@@ -18,8 +18,11 @@ import puc.tcc.logistics.resources.product.ProductResponse;
 import puc.tcc.logistics.services.ProductService;
 
 import javax.transaction.Transactional;
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -97,11 +100,20 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Resource download(Long id) throws MalformedURLException, LogisticsException {
+    public Resource download(Long id) throws MalformedURLException, LogisticsException, URISyntaxException {
         Optional<ProductEntity> productEntity = productRepository.findById(id);
-        if (productEntity.isEmpty()) throw new LogisticsException(HttpStatus.NOT_FOUND, "file", "Arquivo não encontrado!");
+        if (productEntity.isEmpty()) throw new LogisticsException(HttpStatus.NOT_FOUND, "product", "Produto não encontrado!");
 
         Path path = Paths.get(PATH + productEntity.get().getFilePath());
+        File file = path.toFile();
+        if(!file.exists()){
+            path = Paths.get(getDefault());
+        }
         return new UrlResource(path.toUri());
+    }
+
+    private String getDefault() {
+        URL resource = getClass().getClassLoader().getResource("produto-default.png");
+        return resource.getPath();
     }
 }

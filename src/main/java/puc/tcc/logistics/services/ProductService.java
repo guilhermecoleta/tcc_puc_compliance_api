@@ -8,6 +8,7 @@ import puc.tcc.logistics.resources.product.ProductResponse;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,5 +24,5 @@ public interface ProductService {
 
     void upload(Long id, byte[] file, String filename) throws IOException, NotFoundException, LogisticsException;
 
-    Resource download(Long id) throws NotFoundException, MalformedURLException, LogisticsException;
+    Resource download(Long id) throws NotFoundException, MalformedURLException, LogisticsException, URISyntaxException;
 }

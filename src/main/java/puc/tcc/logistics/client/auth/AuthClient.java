@@ -13,7 +13,6 @@ public class AuthClient {
     public UserResponse validate(String token) {
 
         try {
-
             HttpHeaders headers = new HttpHeaders();
             headers.set("Authorization", token);
             RestTemplate restTemplate = new RestTemplate();

@@ -8,8 +8,8 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 public class LogisticsException extends Exception {
 
-    private HttpStatus statusCode;
-    private String field;
-    private String message;
+    private final HttpStatus statusCode;
+    private final String field;
+    private final String message;
 
 }

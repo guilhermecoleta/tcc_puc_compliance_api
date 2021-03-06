@@ -15,12 +15,7 @@ public class AuthFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        if(httpServletRequest.getRequestURI().contains("swagger")
-                || httpServletRequest.getRequestURI().contains("favico")
-                || httpServletRequest.getRequestURI().contains("api-docs")){
-            chain.doFilter(httpServletRequest, res);
-            return;
-        }
+        if (bypass(res, chain, httpServletRequest)) return;
 
         HttpServletResponse response = (HttpServletResponse) res;
         var authHeader = ((HttpServletRequest) request).getHeader("Authorization");
@@ -36,5 +31,16 @@ public class AuthFilter implements Filter {
         HttpSession session = httpServletRequest.getSession(true);
         session.setAttribute("user", user.getId());
         chain.doFilter(request, res);
+    }
+
+    private boolean bypass(ServletResponse res, FilterChain chain, HttpServletRequest httpServletRequest) throws IOException, ServletException {
+        if(httpServletRequest.getRequestURI().contains("swagger")
+                || httpServletRequest.getRequestURI().contains("favico")
+                || httpServletRequest.getRequestURI().contains("api-docs")
+                || httpServletRequest.getMethod().contains("OPTIONS")){
+            chain.doFilter(httpServletRequest, res);
+            return true;
+        }
+        return false;
     }
 }

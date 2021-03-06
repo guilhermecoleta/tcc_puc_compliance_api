@@ -49,7 +49,7 @@ public class SupplierServiceImpl implements SupplierService {
     public List<SupplierResponse> findAll() {
         List<SupplierResponse> items = new ArrayList<>();
         var suppliers = supplierRepository.findAll();
-        suppliers.forEach((item) -> items.add(supplierMapper.toResponse(item)));
+        suppliers.forEach(item -> items.add(supplierMapper.toResponse(item)));
         return items;
     }
 

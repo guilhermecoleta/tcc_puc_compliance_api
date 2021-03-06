@@ -10,7 +10,6 @@ import puc.tcc.logistics.persistence.repositories.SupplierRepository;
 import puc.tcc.logistics.resources.supplier.SupplierRequest;
 import puc.tcc.logistics.resources.supplier.SupplierResponse;
 import puc.tcc.logistics.services.SupplierService;
-import puc.tcc.logistics.utils.CNPJUtils;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -30,13 +29,9 @@ public class SupplierServiceImpl implements SupplierService {
     @Override
     @Transactional
     public SupplierResponse saveOrUpdate(final SupplierRequest supplierRequest) throws LogisticsException {
-        if (CNPJUtils.validate(supplierRequest.getCnpj())) {
-            var model = supplierMapper.toModel(supplierRequest);
-            model = supplierRepository.save(model);
-            return supplierMapper.toResponse(model);
-        } else {
-            throw new LogisticsException(HttpStatus.BAD_REQUEST, "cnpj", "CNPJ inválido!");
-        }
+        var model = supplierMapper.toModel(supplierRequest);
+        model = supplierRepository.save(model);
+        return supplierMapper.toResponse(model);
     }
 
     @Override

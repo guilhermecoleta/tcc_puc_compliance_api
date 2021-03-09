@@ -1,6 +1,6 @@
 package puc.tcc.logistics.services.impl;
 
-import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -17,11 +17,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
+@Slf4j
 public class SupplierServiceImpl implements SupplierService {
 
     @Autowired
-    private final SupplierMapper supplierMapper;
+    private SupplierMapper supplierMapper;
 
     @Autowired
     private SupplierRepository supplierRepository;
@@ -31,6 +31,7 @@ public class SupplierServiceImpl implements SupplierService {
     public SupplierResponse saveOrUpdate(final SupplierRequest supplierRequest) throws LogisticsException {
         var model = supplierMapper.toModel(supplierRequest);
         model = supplierRepository.save(model);
+        log.info("Supplier saved/updated id={}", model.getId());
         return supplierMapper.toResponse(model);
     }
 

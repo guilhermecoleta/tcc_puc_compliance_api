@@ -24,14 +24,14 @@ public class AuthFilter extends BaseFilter implements Filter {
         if(authHeader == null || authHeader.isBlank()){
             response = corsResponse(response);
             response.sendError(HttpStatus.UNAUTHORIZED.value());
-            log.info("UNAUTHORIZED! request_url={}, method={}, header={}", httpServletRequest.getRequestURI(), httpServletRequest.getMethod(), authHeader);
+            log.error("UNAUTHORIZED! request_url={}, method={}, header={}", httpServletRequest.getRequestURI(), httpServletRequest.getMethod(), authHeader);
             return;
         }
         var user = new AuthClient().validate(authHeader);
         log.info("user={}", user);
 
         if(user == null){
-            log.info("UNAUTHORIZED! request_url={}, method={}, header={}", httpServletRequest.getRequestURI(), httpServletRequest.getMethod(), authHeader);
+            log.error("UNAUTHORIZED! request_url={}, method={}, header={}", httpServletRequest.getRequestURI(), httpServletRequest.getMethod(), authHeader);
             response = corsResponse(response);
             response.sendError(HttpStatus.UNAUTHORIZED.value());
             return;

@@ -3,6 +3,7 @@ package puc.tcc.logistics.resources.product;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import puc.tcc.logistics.exception.LogisticsException;
+import puc.tcc.logistics.persistence.domain.ProductEntity;
 import puc.tcc.logistics.services.ProductService;
 
 import javax.validation.Valid;
@@ -49,6 +51,15 @@ public class ProductResource {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping(value = "/products/pageable")
+    public ResponseEntity<Page<ProductEntity>> findAll(
+            @RequestParam(value = "page", required = false, defaultValue = "0") int page,
+            @RequestParam(value = "size", required = false, defaultValue = "10") int size){
+
+        var response = productService.findAll(page, size);
+        return ResponseEntity.ok(response);
+    }
+
     @DeleteMapping(value = "/products/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Long id) throws LogisticsException {
         productService.delete(id);
@@ -57,7 +68,7 @@ public class ProductResource {
 
     @PostMapping("/product/{id}/upload")
     public ResponseEntity<Void> uploadFile(@PathVariable("id") Long id,
-                                        @RequestParam("file") MultipartFile uploadfile) throws IOException, NotFoundException, LogisticsException {
+                                           @RequestParam("file") MultipartFile uploadfile) throws IOException, NotFoundException, LogisticsException {
         productService.upload(id, uploadfile.getBytes(), uploadfile.getOriginalFilename());
         return ResponseEntity.ok().build();
     }

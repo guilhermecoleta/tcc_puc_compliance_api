@@ -13,7 +13,7 @@ import java.io.IOException;
 
 @Component
 @Slf4j
-public class AuthFilter implements Filter {
+public class AuthFilter extends BaseFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
@@ -22,6 +22,7 @@ public class AuthFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) res;
         var authHeader = ((HttpServletRequest) request).getHeader("Authorization");
         if(authHeader == null || authHeader.isBlank()){
+            response = corsResponse(response);
             response.sendError(HttpStatus.UNAUTHORIZED.value());
             log.info("UNAUTHORIZED! request_url={}, method={}, header={}", httpServletRequest.getRequestURI(), httpServletRequest.getMethod(), authHeader);
             return;
@@ -31,6 +32,7 @@ public class AuthFilter implements Filter {
 
         if(user == null){
             log.info("UNAUTHORIZED! request_url={}, method={}, header={}", httpServletRequest.getRequestURI(), httpServletRequest.getMethod(), authHeader);
+            response = corsResponse(response);
             response.sendError(HttpStatus.UNAUTHORIZED.value());
             return;
         }
@@ -46,7 +48,6 @@ public class AuthFilter implements Filter {
                 || httpServletRequest.getMethod().contains("OPTIONS")){
             chain.doFilter(httpServletRequest, res);
             log.info("BYPASS! request_url={}, method={}", httpServletRequest.getRequestURI(), httpServletRequest.getMethod());
-
             return true;
         }
         return false;

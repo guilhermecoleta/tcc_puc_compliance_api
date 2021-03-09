@@ -32,30 +32,19 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
     private static final String PATH = "files//";
+    private static final String PRODUCT = "product";
+
     @Autowired
-    private final ProductMapper productMapper;
+    private ProductMapper productMapper;
 
     @Autowired
     private ProductRepository productRepository;
 
     @Autowired
     private SupplierRepository supplierRepository;
-
-    @Override
-    @Transactional
-    public ProductResponse saveOrUpdate(final ProductRequest productRequest) throws LogisticsException {
-        var model = productMapper.toModel(productRequest);
-        Optional<SupplierEntity> supplier = supplierRepository.findById(productRequest.getId());
-        if(supplier.isEmpty()){
-            throw new LogisticsException(HttpStatus.BAD_REQUEST, "supplier", "Fornecedor não existe");
-        }
-        model = productRepository.save(model);
-        return productMapper.toResponse(model);
-    }
 
     @Override
     public Optional<ProductResponse> findById(final Long id){
@@ -76,16 +65,28 @@ public class ProductServiceImpl implements ProductService {
     public void delete(final Long id) throws LogisticsException {
         var product = productRepository.findById(id);
         if (product.isEmpty()){
-            throw new LogisticsException(HttpStatus.NOT_FOUND, "product", "Produto não existe");
+            throw new LogisticsException(HttpStatus.NOT_FOUND, PRODUCT, "Produto não existe");
         }
         productRepository.deleteById(id);
     }
 
     @Override
     @Transactional
+    public ProductResponse saveOrUpdate(final ProductRequest productRequest) throws LogisticsException {
+        var model = productMapper.toModel(productRequest);
+        Optional<SupplierEntity> supplier = supplierRepository.findById(productRequest.getSupplier());
+        if(supplier.isEmpty()){
+            throw new LogisticsException(HttpStatus.BAD_REQUEST, "supplier", "Fornecedor não existe");
+        }
+        model = productRepository.save(model);
+        return productMapper.toResponse(model);
+    }
+
+    @Override
+    @Transactional
     public void upload(Long id, byte[] file, String filename) throws IOException, LogisticsException {
         Optional<ProductEntity> productEntity = productRepository.findById(id);
-        if (productEntity.isEmpty()) throw new LogisticsException(HttpStatus.NOT_FOUND, "product", "Produto não encontrado!");
+        if (productEntity.isEmpty()) throw new LogisticsException(HttpStatus.NOT_FOUND, PRODUCT, "Produto não encontrado!");
         ProductEntity entity = productEntity.get();
         String filePath = getFilePath(filename, entity.getName());
         entity.setFilePath(filePath);
@@ -102,7 +103,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Resource download(Long id) throws MalformedURLException, LogisticsException, URISyntaxException {
         Optional<ProductEntity> productEntity = productRepository.findById(id);
-        if (productEntity.isEmpty()) throw new LogisticsException(HttpStatus.NOT_FOUND, "product", "Produto não encontrado!");
+        if (productEntity.isEmpty()) throw new LogisticsException(HttpStatus.NOT_FOUND, PRODUCT, "Produto não encontrado!");
 
         Path path = Paths.get(PATH + productEntity.get().getFilePath());
         File file = path.toFile();

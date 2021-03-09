@@ -16,7 +16,7 @@ public class AuthClient {
             HttpHeaders headers = new HttpHeaders();
             headers.set("Authorization", token);
             RestTemplate restTemplate = new RestTemplate();
-            ResponseEntity<UserResponse> response = restTemplate.exchange(URL, HttpMethod.GET, new HttpEntity(headers), UserResponse.class);
+            ResponseEntity<UserResponse> response = restTemplate.exchange(URL, HttpMethod.GET, new HttpEntity<HttpHeaders>(headers), UserResponse.class);
             return response.getBody();
         } catch (Exception e) {
             return null;

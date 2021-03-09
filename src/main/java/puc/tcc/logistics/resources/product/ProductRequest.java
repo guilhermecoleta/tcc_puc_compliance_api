@@ -1,5 +1,6 @@
 package puc.tcc.logistics.resources.product;
 
+import lombok.Builder;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
@@ -7,6 +8,7 @@ import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 @Data
+@Builder
 public class ProductRequest implements Serializable {
     private Long id;
     @Length(max = 500, message = "O campo deve ter no máximo 500 caracteres")

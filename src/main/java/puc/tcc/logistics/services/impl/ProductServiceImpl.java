@@ -1,6 +1,6 @@
 package puc.tcc.logistics.services.impl;
 
-import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class ProductServiceImpl implements ProductService {
 
     private static final String PATH = "files//";
@@ -79,6 +80,7 @@ public class ProductServiceImpl implements ProductService {
             throw new LogisticsException(HttpStatus.BAD_REQUEST, "supplier", "Fornecedor não existe");
         }
         model = productRepository.save(model);
+        log.info("Product saved/updated id={}", model.getId());
         return productMapper.toResponse(model);
     }
 

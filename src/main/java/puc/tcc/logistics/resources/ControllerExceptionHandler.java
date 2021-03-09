@@ -1,5 +1,6 @@
 package puc.tcc.logistics.resources;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -12,6 +13,7 @@ import puc.tcc.logistics.exception.LogisticsException;
 import java.util.Date;
 
 @ControllerAdvice
+@Slf4j
 public class ControllerExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -30,7 +32,7 @@ public class ControllerExceptionHandler {
                 new Date(),
                 field,
                 message);
-
+        log.error("error={}", errorMessage);
         return new ResponseEntity<>(errorMessage, statusCode);
     }
 

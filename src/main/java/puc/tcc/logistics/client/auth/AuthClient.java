@@ -22,7 +22,7 @@ public class AuthClient {
             log.info("AUTHORIZED!");
             return response.getBody();
         } catch (Exception e) {
-            log.info("UNAUTHORIZED! message={}", e.getMessage());
+            log.error("UNAUTHORIZED! message={}", e.getMessage());
             return null;
         }
     }

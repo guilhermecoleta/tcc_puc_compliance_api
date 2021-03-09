@@ -1,11 +1,14 @@
 package puc.tcc.logistics.resources.supplier;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import puc.tcc.logistics.exception.LogisticsException;
+import puc.tcc.logistics.persistence.domain.ProductEntity;
+import puc.tcc.logistics.persistence.domain.SupplierEntity;
 import puc.tcc.logistics.services.SupplierService;
 
 import javax.validation.Valid;
@@ -46,6 +49,15 @@ public class SupplierResource {
     public ResponseEntity<Void> delete(@PathVariable("id") Long id) throws LogisticsException {
         supplierService.delete(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping(value = "/suppliers/pageable")
+    public ResponseEntity<Page<SupplierEntity>> findAll(
+            @RequestParam(value = "page", required = false, defaultValue = "0") int page,
+            @RequestParam(value = "size", required = false, defaultValue = "10") int size){
+
+        var response = supplierService.findAll(page, size);
+        return ResponseEntity.ok(response);
     }
 
 }

@@ -5,6 +5,9 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import puc.tcc.logistics.exception.LogisticsException;
@@ -46,6 +49,13 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private SupplierRepository supplierRepository;
+
+    @Override
+    public Page<ProductEntity> findAll(int page, int size){
+        PageRequest pageRequest = PageRequest.of(page, size);
+
+        return productRepository.search(pageRequest);
+    }
 
     @Override
     public Optional<ProductResponse> findById(final Long id){

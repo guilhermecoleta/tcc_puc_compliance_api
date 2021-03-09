@@ -2,7 +2,9 @@ package puc.tcc.logistics.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import puc.tcc.logistics.exception.LogisticsException;
 import puc.tcc.logistics.mapper.SupplierMapper;
 import puc.tcc.logistics.persistence.repositories.SupplierRepository;
 import puc.tcc.logistics.resources.supplier.SupplierRequest;
@@ -26,7 +28,7 @@ public class SupplierServiceImpl implements SupplierService {
 
     @Override
     @Transactional
-    public SupplierResponse saveOrUpdate(final SupplierRequest supplierRequest) {
+    public SupplierResponse saveOrUpdate(final SupplierRequest supplierRequest) throws LogisticsException {
         var model = supplierMapper.toModel(supplierRequest);
         model = supplierRepository.save(model);
         return supplierMapper.toResponse(model);
@@ -42,13 +44,17 @@ public class SupplierServiceImpl implements SupplierService {
     public List<SupplierResponse> findAll() {
         List<SupplierResponse> items = new ArrayList<>();
         var suppliers = supplierRepository.findAll();
-        suppliers.forEach((item) -> items.add(supplierMapper.toResponse(item)));
+        suppliers.forEach(item -> items.add(supplierMapper.toResponse(item)));
         return items;
     }
 
     @Override
     @Transactional
-    public void delete(final Long id){
+    public void delete(final Long id) throws LogisticsException {
+        var supplier = supplierRepository.findById(id);
+        if(supplier.isEmpty()){
+            throw new LogisticsException(HttpStatus.NOT_FOUND, "supplier", "Fornecedor não existe!");
+        }
         supplierRepository.deleteById(id);
     }
 }

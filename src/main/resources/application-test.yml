@@ -19,3 +19,4 @@
         ddl-auto: none
         jdbc:
           non_contextual_creation: true
+

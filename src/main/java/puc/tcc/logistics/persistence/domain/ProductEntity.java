@@ -1,7 +1,6 @@
 package puc.tcc.logistics.persistence.domain;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,6 +9,9 @@ import java.io.Serializable;
 @Table(name = "product")
 @EqualsAndHashCode
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProductEntity implements Serializable {
     private static final String SEQ_PRODUCT_GEN = "SEQ_PRODUCT_GEN";
     private static final String SQ_PRODUCT = "SEQ_PRODUCT";

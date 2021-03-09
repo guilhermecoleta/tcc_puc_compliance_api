@@ -1,8 +1,15 @@
 package puc.tcc.logistics.exception;
 
-public class LogisticsException extends RuntimeException {
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import org.springframework.http.HttpStatus;
 
-    public LogisticsException(String message) {
-        super(message);
-    }
+@Getter
+@AllArgsConstructor
+public class LogisticsException extends Exception {
+
+    private final HttpStatus statusCode;
+    private final String field;
+    private final String message;
+
 }

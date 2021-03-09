@@ -26,8 +26,8 @@ jobs:
       - name: Build with Gradle
         run: gradle build -x test
 
-      - name: Build with Gradle
-        run: gradle build -x test
+      - name: Tests
+        run: gradle test -Ptest
 
       - name: Migration
         run: gradle migrateProd -i

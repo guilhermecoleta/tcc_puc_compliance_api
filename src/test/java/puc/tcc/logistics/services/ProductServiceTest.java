@@ -6,6 +6,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import puc.tcc.logistics.SampleBaseTestCase;
 import puc.tcc.logistics.exception.LogisticsException;
 import puc.tcc.logistics.mapper.ProductMapper;
@@ -24,6 +25,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
+@ActiveProfiles
 class ProductServiceTest extends SampleBaseTestCase {
 
     @Mock

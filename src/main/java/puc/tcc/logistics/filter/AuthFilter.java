@@ -45,7 +45,7 @@ public class AuthFilter implements Filter {
                 || httpServletRequest.getRequestURI().contains("api-docs")
                 || httpServletRequest.getMethod().contains("OPTIONS")){
             chain.doFilter(httpServletRequest, res);
-            log.info("BYPASS! request_url={}, method={}, header={}", httpServletRequest.getRequestURI(), httpServletRequest.getMethod(), authHeader);
+            log.info("BYPASS! request_url={}, method={}", httpServletRequest.getRequestURI(), httpServletRequest.getMethod());
 
             return true;
         }

@@ -27,7 +27,7 @@ jobs:
         run: gradle build -x test
 
       - name: Tests
-        run: gradle test -Ptest
+        run: gradle test
 
       - name: Migration
         run: gradle migrateProd -i

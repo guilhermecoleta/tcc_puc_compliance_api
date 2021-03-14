@@ -32,7 +32,6 @@ public class ControllerExceptionHandler {
                 new Date(),
                 field,
                 message);
-        log.error("error={}", errorMessage);
         return new ResponseEntity<>(errorMessage, statusCode);
     }
 
@@ -44,6 +43,7 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorMessage> globalExceptionHandler(Exception ex, WebRequest request) {
+        log.error("error={}", ex.getMessage());
         return getErrorMessageResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, "ERROR", "Ocorreu um erro");
     }
 }

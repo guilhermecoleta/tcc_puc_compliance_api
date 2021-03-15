@@ -16,6 +16,7 @@ jobs:
         run: echo "Set envs"
         env:
           DATABASE: ${{ secrets.DATABASE }}
+          PROFILE: production
 
       - name: Checkout
         uses: actions/checkout@v2

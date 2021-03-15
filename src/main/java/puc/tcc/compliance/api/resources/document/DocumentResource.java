@@ -28,7 +28,7 @@ public class DocumentResource {
     @PutMapping(value = "/documents", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<DocumentResponse> update(@Valid @RequestBody final DocumentRequest documentRequest) throws ComplianceApiException {
-        return ResponseEntity.status(HttpStatus.CREATED).body(documentService.saveOrUpdate(documentRequest));
+        return ResponseEntity.status(HttpStatus.OK).body(documentService.saveOrUpdate(documentRequest));
     }
 
     @GetMapping(value = "/documents/{id}")

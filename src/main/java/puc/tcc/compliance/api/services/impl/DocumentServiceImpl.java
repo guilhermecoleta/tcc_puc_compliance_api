@@ -34,18 +34,18 @@ public class DocumentServiceImpl implements DocumentService {
     @Transactional
     public DocumentResponse saveOrUpdate(final DocumentRequest documentRequest) {
         var model = documentMapper.toModel(documentRequest);
-        model.setVersion(getVersion(documentRequest, model));
+        model.setVersion(getVersion(documentRequest));
         model.setDatUpdated(LocalDateTime.now());
         model = documentRepository.save(model);
         log.info("document saved/updated document={}", model);
         return documentMapper.toResponse(model);
     }
 
-    private Integer getVersion(DocumentRequest documentRequest, DocumentEntity model) {
+    private Integer getVersion(DocumentRequest documentRequest) {
         if(documentRequest.getId() != null){
             var document = documentRepository.findById(documentRequest.getId());
             if (document.isPresent()){
-                return model.getVersion() + 1;
+                return document.get().getVersion() + 1;
             }
         }
         return 1;

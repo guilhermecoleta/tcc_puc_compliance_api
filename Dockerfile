@@ -4,6 +4,4 @@ ARG JAR_FILE=build/libs/\compliance-api-1.0.0.jar
 COPY ${JAR_FILE} app.jar
 ARG PROFILE
 ENV PROFILE=$PROFILE
-
-RUN mkdir -p /files
 ENTRYPOINT ["java","-Dspring.profiles.active=${PROFILE}","-jar","/app.jar"]

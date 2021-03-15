@@ -1,13 +1,15 @@
 #### PUC Minas - Arquitetura de Sistemas Distribuídos
 
-### TCC - POC da api do módulo Sistema de Logística
+### TCC - POC da api do módulo Gestão de Normas
 
-Sistema de Logística: permite cadastrar e gerir os recursos logísticos empregados tanto para as
-operações de compra como de venda. Todos os insumos utilizados pela atividade têxtil são
-cadastrados e geridos neste sistema, a fim de manter o controle de sua utilização e evitar
-desperdícios.
-Este subsistema está totalmente integrado aos sistemas de Compras e de Vendas, que não estão
-contemplados no escopo deste trabalho.
+- Gestão de Normas: este módulo visa manter as normas técnicas existentes nas áreas industrial,
+  ambiental e outras aplicáveis. Devem fornecer toda a base para compliance, incluindo o planejamento de
+  ações que envolvam o uso correto e eficiente e recursos, descarte de sub-produtos do processo industrial
+  no meio-ambiente, monitoramento de riscos de acidentes e suas consequências, etc. O repositório de
+  normas estará disponível em tecnologias de nuvem como um serviço ou função (SaaS/FaaS), sendo
+  persistido em tecnologia de SGBD relacional, acessível por meio de microsserviços. Adicionalmente
+  deverá ser previsto um web service que fará acesso às bases de dados externas de normas, com vistas a
+  identificar e notificar sobre possíveis mudanças e evoluções.
 
 #### Stack utilizada
 
@@ -38,10 +40,10 @@ contemplados no escopo deste trabalho.
 `./gradlew build`
 
 #####Gerando a imagem do docker
-`docker build  -f Dockerfile-local -t logistics .`
+`docker build  -f Dockerfile-local -t compliance-api .`
 
 #####Rodando a aplicação
-`docker run -d -p 8081:8081 -t logistics`
+`docker run -d -p 8081:8081 -t compliance-api`
 
 ###Acessando a aplicação
 
@@ -51,4 +53,4 @@ contemplados no escopo deste trabalho.
 http://localhost:8081/swagger-ui.html
 
 #####Produção
-https://logistics-supply-api.herokuapp.com//swagger-ui.html
+https://tcc-compliance-api.herokuapp.com//swagger-ui.html

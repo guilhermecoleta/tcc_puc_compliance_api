@@ -15,6 +15,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Set envs
+        env:
+          DATABASE: ${{ secrets.DATABASE }}
+          PROFILE: production
       - name: Checkout
         uses: actions/checkout@v2
 

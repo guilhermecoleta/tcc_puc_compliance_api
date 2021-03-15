@@ -8,7 +8,7 @@
       hikari:
         connection_timeout: 10000
         maximum_pool_size: 5
-      url: jdbc:postgresql://localhost:5432/logistics
+      url: jdbc:postgresql://localhost:5432/compliance
       username: admin
       password: admin
       driver-class-name: org.postgresql.Driver

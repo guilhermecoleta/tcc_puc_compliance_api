@@ -46,7 +46,7 @@ test {
 }
 
 task migrateLocal(type: FlywayMigrateTask) {
-	url = 'jdbc:postgresql://localhost:5432/logistics'
+	url = 'jdbc:postgresql://localhost:5432/compliance'
 	user = 'admin'
 	password = 'admin'
 	schemas = ['public']

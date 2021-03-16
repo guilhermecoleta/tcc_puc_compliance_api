@@ -6,8 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Data
 @Builder
 @AllArgsConstructor
@@ -16,7 +14,7 @@ public class DocumentResponse {
     private Long id;
     private String name;
     @JsonProperty(value = "dat_updated")
-    private LocalDateTime datUpdated;
+    private String datUpdated;
     private Integer version;
     private String text;
 }

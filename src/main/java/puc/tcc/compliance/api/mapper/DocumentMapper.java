@@ -23,7 +23,7 @@ public interface DocumentMapper {
             @Mapping(source = "entity.name", target = "name"),
             @Mapping(source = "entity.text", target = "text"),
             @Mapping(source = "entity.version", target = "version"),
-            @Mapping(source = "entity.datUpdated", target = "datUpdated")
+            @Mapping(source = "entity.datUpdated", target = "datUpdated", dateFormat = "dd/MM/yyyy HH:mm:ss")
     })
     DocumentResponse toResponse(DocumentEntity entity);
 

@@ -13,7 +13,6 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DocumentRequest {
-    private Long id;
     @Length(max = 50, message = "O campo deve ter no máximo 500 caracteres")
     @NotBlank(message = "O campo nome deve ser preenchido")
     private String name;

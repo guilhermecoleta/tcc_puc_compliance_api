@@ -36,7 +36,7 @@ public class DocumentResource {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping(value = "/documents/all/{number}")
+    @GetMapping(value = "/documents/number/{number}")
     public ResponseEntity<List<DocumentResponse>> findAll(@PathVariable("number") String number){
         var response = documentService.findAll(number);
         if(response.isEmpty()) return ResponseEntity.notFound().build();

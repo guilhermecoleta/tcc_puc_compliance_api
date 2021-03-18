@@ -1,15 +1,20 @@
 package puc.tcc.compliance.api.persistence.repositories;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import puc.tcc.compliance.api.persistence.domain.DocumentEntity;
+
+import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface DocumentRepository extends JpaRepository<DocumentEntity, Long> {
 
-    @Query("FROM DocumentEntity d")
-    Page<DocumentEntity> search(Pageable pageable);
+    List<DocumentEntity> findByCurrentTrue();
+
+    List<DocumentEntity> findByNumberOrderByVersionDesc(@Param("number") String number);
+
+    Optional<DocumentEntity> findFirstByNumberOrderByVersionDesc(@Param("number") String number);
+
 }

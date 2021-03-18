@@ -20,4 +20,7 @@ public class DocumentRequest {
     @Length(max = 30000, message = "O campo deve ter no máximo 14 caracteres")
     @NotBlank(message = "O campo texto deve ser preenchido")
     private String text;
+    @Length(max = 100, message = "O campo deve ter no máximo 100 caracteres")
+    @NotBlank(message = "O campo número deve ser preenchido")
+    private String number;
 }

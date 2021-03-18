@@ -2,15 +2,13 @@ package puc.tcc.compliance.api.services.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import puc.tcc.compliance.api.exception.ComplianceApiException;
-import puc.tcc.compliance.api.resources.document.DocumentRequest;
 import puc.tcc.compliance.api.mapper.DocumentMapper;
 import puc.tcc.compliance.api.persistence.domain.DocumentEntity;
 import puc.tcc.compliance.api.persistence.repositories.DocumentRepository;
+import puc.tcc.compliance.api.resources.document.DocumentRequest;
 import puc.tcc.compliance.api.resources.document.DocumentResponse;
 import puc.tcc.compliance.api.services.DocumentService;
 
@@ -34,28 +32,19 @@ public class DocumentServiceImpl implements DocumentService {
     @Transactional
     public DocumentResponse saveOrUpdate(final DocumentRequest documentRequest) {
         var model = documentMapper.toModel(documentRequest);
-        model.setVersion(getVersion(documentRequest));
+        var document = documentRepository.findFirstByNumberOrderByVersionDesc(model.getNumber());
+        int version = 1;
+        if(document.isPresent()){
+            version = document.get().getVersion() + 1;
+            document.get().setCurrent(false);
+            documentRepository.save(document.get());
+        }
+        model.setVersion(version);
+        model.setCurrent(true);
         model.setDatUpdated(LocalDateTime.now());
         model = documentRepository.save(model);
         log.info("document saved/updated document={}", model);
         return documentMapper.toResponse(model);
-    }
-
-    private Integer getVersion(DocumentRequest documentRequest) {
-        if(documentRequest.getId() != null){
-            var document = documentRepository.findById(documentRequest.getId());
-            if (document.isPresent()){
-                return document.get().getVersion() + 1;
-            }
-        }
-        return 1;
-    }
-
-    @Override
-    public Page<DocumentEntity> findAll(int page, int size){
-        PageRequest pageRequest = PageRequest.of(page, size);
-
-        return documentRepository.search(pageRequest);
     }
 
     @Override
@@ -65,9 +54,14 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public List<DocumentResponse> findAll() {
+    public List<DocumentResponse> findAll(String number) {
         List<DocumentResponse> items = new ArrayList<>();
-        var documents = documentRepository.findAll();
+        List<DocumentEntity> documents;
+        if (number == null){
+            documents = documentRepository.findByCurrentTrue();
+        }else{
+            documents = documentRepository.findByNumberOrderByVersionDesc(number);
+        }
         documents.forEach(item -> items.add(documentMapper.toResponse(item)));
         return items;
     }

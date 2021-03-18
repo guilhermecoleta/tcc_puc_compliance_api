@@ -13,11 +13,9 @@ import java.util.Optional;
 public interface DocumentService {
     DocumentResponse saveOrUpdate(final DocumentRequest documentRequest) throws ComplianceApiException;
 
-    Page<DocumentEntity> findAll(int page, int size);
-
     Optional<DocumentResponse> findById(final Long id);
 
-    List<DocumentResponse> findAll();
+    List<DocumentResponse> findAll(String number);
 
     void delete(final Long id) throws ComplianceApiException;
 }

@@ -17,4 +17,6 @@ public class DocumentResponse {
     private String datUpdated;
     private Integer version;
     private String text;
+    private String number;
+
 }

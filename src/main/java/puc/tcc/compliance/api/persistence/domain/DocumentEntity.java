@@ -25,6 +25,12 @@ public class DocumentEntity implements Serializable {
     private String name;
     @Column(name = "dat_updated")
     private LocalDateTime datUpdated;
+    @Column(name = "number_document")
+    private String number;
     private Integer version;
     private String text;
+    @Column(name = "current_document")
+    private Boolean current;
 }
+
+

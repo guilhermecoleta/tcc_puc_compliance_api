@@ -12,9 +12,9 @@ import puc.tcc.compliance.api.resources.document.DocumentResponse;
 public interface DocumentMapper {
 
     @Mappings({
-            @Mapping(source = "request.id", target = "id"),
             @Mapping(source = "request.name", target = "name"),
-            @Mapping(source = "request.text", target = "text")
+            @Mapping(source = "request.text", target = "text"),
+            @Mapping(source = "request.number", target = "number")
     })
     DocumentEntity toModel(DocumentRequest request);
 
@@ -23,6 +23,7 @@ public interface DocumentMapper {
             @Mapping(source = "entity.name", target = "name"),
             @Mapping(source = "entity.text", target = "text"),
             @Mapping(source = "entity.version", target = "version"),
+            @Mapping(source = "entity.number", target = "number"),
             @Mapping(source = "entity.datUpdated", target = "datUpdated", dateFormat = "dd/MM/yyyy HH:mm:ss")
     })
     DocumentResponse toResponse(DocumentEntity entity);

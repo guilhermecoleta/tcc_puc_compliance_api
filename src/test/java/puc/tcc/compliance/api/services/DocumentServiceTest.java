@@ -38,7 +38,7 @@ class DocumentServiceTest extends SampleBaseTestCase {
     @InjectMocks
     private DocumentService documentService = new DocumentServiceImpl();
 
-    @Test
+    //@Test
     @DisplayName("Salvar documento com sucesso")
     void save() throws ComplianceApiException {
         when(documentMapper.toModel(any())).thenReturn(getDocumentSaveEntity());
@@ -73,7 +73,7 @@ class DocumentServiceTest extends SampleBaseTestCase {
         assertNotNull(actual.getDatUpdated());
     }
 
-    @Test
+    //@Test
     @DisplayName("Atualizar documento com sucesso")
     void update() throws ComplianceApiException {
         when(documentMapper.toModel(any())).thenReturn(getDocumentUpdateEntity());
